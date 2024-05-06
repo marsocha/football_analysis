@@ -25,7 +25,7 @@ class Tracker:
         x_center, _ = get_center_of_bbox(bbox)
         width = get_bbox_width(bbox)
 
-        cv2.ellipse(frame, (x_center, y2), 
+        cv2.ellipse(frame, center = (x_center, y2), 
                     axes = (int(width), int(0.3 * width)),
                     angle = 0.0,
                     startAngle = -45,
@@ -94,8 +94,11 @@ class Tracker:
     def draw_annotations(self, video_frames, tracks):
         output_video_frames = []
         for frame_num, frame in enumerate(video_frames):
+            if frame_num == 400: # my computer can't handle more than 400 frames
+                                 # originally video has 750 frames
+                break
             frame = frame.copy()
-
+        
             player_dict = tracks['players'][frame_num]
             ball_dict = tracks['ball'][frame_num]
             referee_dict = tracks['referees'][frame_num]
@@ -103,7 +106,6 @@ class Tracker:
             # Draw Players
             for track_id, player in player_dict.items():
                 frame = self.draw_ellipse(frame, player['bbox'], (0, 255, 0), track_id)
-
             output_video_frames.append(frame)
         
         return output_video_frames
