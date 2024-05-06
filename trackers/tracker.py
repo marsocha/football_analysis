@@ -95,7 +95,7 @@ class Tracker:
         output_video_frames = []
         for frame_num, frame in enumerate(video_frames):
             if frame_num == 400: # my computer can't handle more than 400 frames
-                                 # originally video has 750 frames
+                                 # originally video had 720 frames
                 break
             frame = frame.copy()
         
